@@ -1,0 +1,84 @@
+Perfect, Vrisha 👍 — let’s walk through exactly how you’d set up and push a GitHub Actions workflow using Git Bash. I’ll give you the commands step by step so you can reproduce them on your Windows machine.
+
+🛠 Steps in Git Bash
+1. Navigate to your repo
+Open Git Bash and move into your project folder:
+cd path/to/your/repo
+
+
+2. Create the workflow directory
+GitHub Actions workflows must live inside .github/workflows/.
+mkdir -p .github/workflows
+
+
+3. Create the YAML file
+Use nano or vim (or even Notepad if easier). Example with nano:
+nano .github/workflows/ci.yml
+
+
+Paste the workflow content (Node.js example):
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+
+Save and exit (CTRL+O, Enter, CTRL+X in nano).
+
+4. Stage and commit the workflow
+git add .github/workflows/ci.yml
+git commit -m "Add CI workflow for build and test"
+
+
+5. Push to GitHub
+git push origin main
+
+
+This push will trigger the workflow automatically.
+
+📸 Checking the Actions Output
+- Screenshots of Actions run (summary + logs).
+- Explanation of secrets configuration.
+
+👉 Since you’re comfortable with Python labs too, do you want me to give you the Python version of the workflow commands in Git Bash (with requirements.txt + pytest) so you can choose depending on your assignment?
+- Go to your repo on GitHub.
+- Logs showing test execution.
+- Add a secret (e.g., MY_API_KEY).
+- Reference it in YAML:
+- name: Run tests with secret
+
+
+✅ Submission Checklist
+- .github/workflows/ci.yml file in repo.
+
+    API_KEY: ${{ secrets.MY_API_KEY }}
+  env:
+  run: npm test
+- On GitHub → Settings → Secrets and variables → Actions → New repository secret.
+If your test requires sensitive values (API keys, DB passwords):
+🔐 Configuring Secrets (if needed)
+
+- Click the Actions tab.
+- Logs showing dependency installation.
+- You’ll see the workflow run triggered by your push.
